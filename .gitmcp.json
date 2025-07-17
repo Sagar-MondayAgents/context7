@@ -1,0 +1,6 @@
+{
+  "name": "context7",
+  "command": "node",
+  "args": ["dist/index.js"],
+  "description": "Context7 MCP Server"
+}
