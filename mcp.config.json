@@ -1,0 +1,17 @@
+{
+    "name": "context7",
+    "description": "Context7 MCP Server",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "type": "stdio",
+    "languages": ["typescript"],
+    "build": "bun run build",
+    "tools": {
+      "resolve-library-id": {
+        "description": "Resolve library ID"
+      },
+      "get-library-docs": {
+        "description": "Get library documentation"
+      }
+    }
+  }
