@@ -542,7 +542,7 @@ Once the MCP server is added, restart your editor. If you receive any errors, ch
 Add this to your Roo Code MCP configuration file. See [Roo Code MCP docs](https://docs.roocode.com/features/mcp/using-mcp-in-roo) for more info.
 
 #### Roo Code Remote Server Connection
-
+home/samspc/SaMsDrivE/MLAI/mcp
 ```json
 {
   "mcpServers": {
@@ -589,7 +589,7 @@ To configure Context7 MCP in Zencoder, follow these steps:
 }
 ```
 
-Once the MCP server is added, you can easily continue using it.
+Once the MCP server is added, you home/samspc/SaMsDrivE/MLAI/mcpcan easily continue using it.
 
 </details>
 
