@@ -31,8 +31,19 @@ const CLI_PORT = (() => {
 })();
 // Store SSE transports by session ID
 const sseTransports = {};
+function getClientIp(req) {
+    // Check for X-Forwarded-For header (set by AWS ELB and other load balancers)
+    const forwardedFor = req.headers["x-forwarded-for"];
+    if (forwardedFor) {
+        // X-Forwarded-For can contain multiple IPs, take the first one
+        const ips = Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor;
+        return ips.split(",")[0].trim();
+    }
+    // Fall back to socket remote address
+    return req.socket?.remoteAddress || undefined;
+}
 // Function to create a new server instance with all tools registered
-function createServerInstance() {
+function createServerInstance(clientIp) {
     const server = new McpServer({
         name: "Context7",
         version: "1.0.13",
@@ -63,7 +74,7 @@ For ambiguous queries, request clarification before proceeding with a best-guess
             .string()
             .describe("Library name to search for and retrieve a Context7-compatible library ID."),
     }, async ({ libraryName }) => {
-        const searchResponse = await searchLibraries(libraryName);
+        const searchResponse = await searchLibraries(libraryName, clientIp);
         if (!searchResponse.results || searchResponse.results.length === 0) {
             return {
                 content: [
@@ -117,7 +128,7 @@ ${resultsText}`,
         const fetchDocsResponse = await fetchLibraryDocumentation(context7CompatibleLibraryID, {
             tokens,
             topic,
-        });
+        }, clientIp);
         if (!fetchDocsResponse) {
             return {
                 content: [
@@ -159,8 +170,10 @@ async function main() {
                 return;
             }
             try {
+                // Extract client IP address using socket remote address (most reliable)
+                const clientIp = getClientIp(req);
                 // Create new server instance for each request
-                const requestServer = createServerInstance();
+                const requestServer = createServerInstance(clientIp);
                 if (url === "/mcp") {
                     const transport = new StreamableHTTPServerTransport({
                         sessionIdGenerator: undefined,
