@@ -12,7 +12,7 @@ const DEFAULT_MINIMUM_TOKENS = 10000;
 // Parse CLI arguments using commander
 const program = new Command()
     .option("--transport <stdio|http|sse>", "transport type", "stdio")
-    .option("--port <number>", "port for HTTP/SSE transport", "3000")
+    .option("--port <number>", "port for HTTP/SSE transport", "4302")
     .allowUnknownOption() // let MCP Inspector / other wrappers pass through extra flags
     .parse(process.argv);
 const cliOptions = program.opts();
@@ -154,7 +154,7 @@ async function main() {
     const transportType = TRANSPORT_TYPE;
     if (transportType === "http" || transportType === "sse") {
         // Get initial port from environment or use default
-        const initialPort = CLI_PORT ?? 3000;
+        const initialPort = CLI_PORT ?? 4301;
         // Keep track of which port we end up using
         let actualPort = initialPort;
         const httpServer = createServer(async (req, res) => {

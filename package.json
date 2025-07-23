@@ -8,7 +8,7 @@
     "format": "prettier --write .",
     "lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
     "lint:check": "eslint \"**/*.{js,ts,tsx}\"",
-    "start": "node dist/index.js --transport http",
+    "start": "node dist/index.js --transport http --port 4301",
     "mcp:start": "node dist/index.js"
 
   },
